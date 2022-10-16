@@ -6,11 +6,11 @@ import (
 
 	// "github.com/labstack/echo/v4"
 	// "github.com/labstack/echo/v4/middleware"
-	// "time"
+	"fmt"
 )
 
-func test(a string) (string) {
-    return a
+func Foo() {
+	fmt.Println("Foo!")
 }
 
 // func createMux() *echo.Echo {

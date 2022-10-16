@@ -8,9 +8,9 @@ import (
 	// "github.com/labstack/echo/v4/middleware"
 	// "time"
 
-    "src/api/echoset"
-    // "github.com/Poul-george/go-api/api/echoset"
-    "fmt"
+    // "echoset"
+    "github.com/Poul-george/go-api/echoset"
+    // "fmt"
 )
 
 // type Book struct {
@@ -27,7 +27,8 @@ func main() {
 	// e.GET("/json", getJson)
 
 	// e.Logger.Fatal(e.Start(":1324"))
-	fmt.Println(echoset.test("kkk"))
+	// fmt.Println(echoset.auu("kkk"))
+	echoset.Foo()
 }
 
 // func createMux() *echo.Echo {

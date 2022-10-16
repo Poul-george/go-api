@@ -8,9 +8,10 @@ services:
     ports:
       - 1324:1324
     volumes:
-      - ./api:/go/src/api
-      # - ./api:/go/src
-      # - ./go/go.mod:/go.mod
+      # - ./main.go:/go/src/main.go
+      # - ./echoset:/go/src/echoset
+      - .:/go/src
+      # - ./go.mod:/go/src/go.mod
       # - ./go/go.sum:/go.sum
 
   # frontend:
