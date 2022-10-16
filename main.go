@@ -8,8 +8,8 @@ import (
 	// "github.com/labstack/echo/v4/middleware"
 	// "time"
 
-    // "github.com/Poul-george/go_api_app/tree/master/go/api/echoset"
-    "api/echoset"
+    "src/api/echoset"
+    // "github.com/Poul-george/go-api/api/echoset"
     "fmt"
 )
 
@@ -20,14 +20,14 @@ import (
 // 	Day time.Time
 // }
 
-var e = echoset.test()
+// var e = echoset.test("kkk")
 
 func main() {
 	// e.GET("/", articleIndex)
 	// e.GET("/json", getJson)
 
 	// e.Logger.Fatal(e.Start(":1324"))
-	fmt.Println(e)
+	fmt.Println(echoset.test("kkk"))
 }
 
 // func createMux() *echo.Echo {
