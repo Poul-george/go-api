@@ -1,19 +1,11 @@
 package echoset
+//echoのcros設定のファイル airでの実装を考慮
 
 import (
 	"net/http"
-
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"fmt"
 )
-
-func Foo() {
-	fmt.Println("Foo!")
-}
-func Test(a string) string {
-	return a
-}
 
 func CreateMux() *echo.Echo {
 	e := echo.New()
@@ -24,9 +16,6 @@ func CreateMux() *echo.Echo {
     }
 
 	// CORS用のmiddlewareはあるものの、403を勝手に返してくれるわけではない。
-    // 以下のレスポンスヘッダを付与する役割がある。
-    // Access-Control-Allow-Credentials: true
-    // Access-Control-Allow-Origin: https://www.example.com:8080
     e.Use(
         middleware.CORSWithConfig(middleware.CORSConfig{
             AllowCredentials: true,

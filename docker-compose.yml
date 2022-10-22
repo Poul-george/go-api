@@ -4,6 +4,7 @@ services:
     build: .
     image: go-echo-app
     container_name: go-echo-app
+    hostname: go-echo-app
     tty: true
     ports:
       - 1324:1324
@@ -11,4 +12,15 @@ services:
       - ./api:/go/src/api
       - ./go.mod:/go/src/go.mod
       - ./go.sum:/go/src/go.sum
+    environment:
+      MYSQL_DATABASE: postapp
+      MYSQL_HOST: mysql_host  # 追加!!
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+      MYSQL_PORT: 3306
+    networks:
+      - sample-network
 
+networks:
+    sample-network:
+        external: true

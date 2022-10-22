@@ -3,31 +3,24 @@ package request_get
 import (
 	"net/http"
 	"encoding/json"
-
 	"github.com/labstack/echo/v4"
-	"time"
+	"github.com/Poul-george/go-api/api/mysql_set"
 )
 
-type Book struct {
-	Id string
-	Name string
-	Author string
-	Day time.Time
-}
+func GetUsers(c echo.Context) error {
+	db := mysql_set.Mysql_Connect()
+	result := []*mysql_set.Users{}
+	_ = db.DB.Table("users").Select("id,name,author,created_at").Scan(&result).Error
 
- func ArticleIndex(c echo.Context) error {
-	return c.String(http.StatusOK, "hello css html")
-}
+	all_users := make([]mysql_set.Users, len(result))
 
-func GetJson(c echo.Context) error {
-	array := make([]Book, 3)
-	for i := 0;i < len(array);i++ {
-		array[i].Id = "vol1010tttx7ym9l"
-		array[i].Name = "C++ programming language"
-		array[i].Author = "Bjarne Stroutsrup"
-		array[i].Day = time.Now()
+	for i, r := range result {
+		all_users[i].Id = r.Id
+		all_users[i].Name = r.Name
+		all_users[i].Author = r.Author
+		all_users[i].CreatedAt = r.CreatedAt
 	}
 
-	res, _ := json.Marshal(array)
+	res, _ := json.Marshal(all_users)
 	return c.String(http.StatusOK, string(res))
 }
