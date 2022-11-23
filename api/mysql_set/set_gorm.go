@@ -11,8 +11,11 @@ import (
 type Users struct {
     Id int `json:"Id"`
     Name string `json:"Name"`
-    Author string `json:"Author"`
+    Passward string `json:"Passward"`
+    MailAddress string `json:"MailAddress"`
+    Comments string `json:"Comments"`
     CreatedAt time.Time `json:"CreatedAt"`
+    UpdatedAt time.Time `json:"UpdatedAt"`
 }
 
 // SQLHandler ...
