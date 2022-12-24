@@ -11,7 +11,7 @@ import (
 
 func GetUsers(db *mysql_setting.SQLHandler) []repository.Users {
 	result := []repository.Users{}
-	_ = db.DB.Table("users").Select("id,name,passward,mail_address,comments,created_at,updated_at").Scan(&result).Error
+	_ = db.DB.Table("users").Select("id,name,password,mail_address,comments,created_at,updated_at").Scan(&result).Error
 	return result
 }
 
