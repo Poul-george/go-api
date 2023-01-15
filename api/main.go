@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/Poul-george/go-api/api/echoset"
-	"github.com/Poul-george/go-api/api/presentation/controller/users"
-	"github.com/Poul-george/go-api/api/request_get"
+	"github.com/Poul-george/go-api/api/infrastructure/echo/echoset"
+	"github.com/Poul-george/go-api/api/presentation/controller/user/create"
+	"github.com/Poul-george/go-api/api/presentation/controller/user/list"
 	"github.com/labstack/echo/v4/middleware"
 )
 
@@ -13,7 +13,7 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	e.GET("/users", request_get.ResponesUsers)
-	e.POST("/users", users.Controller)
+	e.GET("/users", list.Get)
+	e.POST("/users", create.Post)
 	e.Logger.Fatal(e.Start(":1324"))
 }
