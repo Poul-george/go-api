@@ -1,21 +1,10 @@
 package user
 
 import (
-	"time"
-
 	"github.com/Poul-george/go-api/api/core/domain/model"
+	"github.com/Poul-george/go-api/api/infrastructure/data/persistence/gorm/table"
 	"github.com/Poul-george/go-api/api/infrastructure/mysql/mysql_setting"
 )
-
-type Users struct {
-	Id          int       `json:"Id"`
-	Name        string    `json:"Name"`
-	Password    string    `json:"Password"`
-	MailAddress string    `json:"MailAddress"`
-	Comments    string    `json:"Comments"`
-	CreatedAt   time.Time `json:"CreatedAt"`
-	UpdatedAt   time.Time `json:"UpdatedAt"`
-}
 
 func Create(user *model.User) error {
 	db := mysql_setting.Mysql_Connect()
@@ -27,10 +16,10 @@ func Create(user *model.User) error {
 	return nil
 }
 
-func List() ([]Users, error) {
-	users := []Users{}
+func List() ([]table.User, error) {
+	users := []table.User{}
 	db := mysql_setting.Mysql_Connect()
-	err := db.DB.Table("users").Select("id,name,password,mail_address,comments,created_at,updated_at").Scan(&users).Error
+	err := db.DB.Find(&users).Order("id desc").Error
 	if err != nil {
 		return nil, err
 	}

@@ -6,13 +6,13 @@ import (
 	"github.com/Poul-george/go-api/api/infrastructure/repository/user"
 )
 
-func Do() (*[]user.Users, error) {
-	user, err := user.List()
-	fmt.Printf("--------------------{[%v]}----------------------------00000\n", user)
+func Do() (*Output, error) {
+	users, err := user.List()
+	fmt.Printf("--------------------{[%v]}----------------------------00000\n", users)
 
 	if err != nil {
 		return nil, err
 	}
 
-	return &user, nil
+	return NewOutput(users), nil
 }

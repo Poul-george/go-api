@@ -3,12 +3,12 @@ package list
 import (
 	"time"
 
-	"github.com/Poul-george/go-api/api/infrastructure/repository/user"
+	"github.com/Poul-george/go-api/api/core/usecase/api/user/list"
 )
 
-type Response []usr
+type Response []UserResponse
 
-type usr struct {
+type UserResponse struct {
 	ID          int       `json:"id"`
 	Name        string    `json:"name"`
 	Password    string    `json:"password"`
@@ -17,13 +17,12 @@ type usr struct {
 	UpdatedAt   time.Time `json:"latest_day"`
 }
 
-func NewResponse(out []user.Users) Response {
-	users := make([]usr, len(out))
-	for i, u := range out {
-		users[i] = usr{
+func NewResponse(out list.Output) Response {
+	users := make([]UserResponse, len(out.Users))
+	for i, u := range out.Users {
+		users[i] = UserResponse{
 			ID:          u.Id,
 			Name:        u.Name,
-			Password:    u.Password,
 			MailAddress: u.MailAddress,
 			Comments:    u.Comments,
 			UpdatedAt:   u.UpdatedAt,
