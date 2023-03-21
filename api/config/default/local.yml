@@ -1,0 +1,10 @@
+mysql:
+  user: docker
+  host: mysql_host
+  port: 3306
+  password: docker
+  database: postapp
+
+server:
+  start_address: http://localhost:1324
+  idle_timeout: 30_000_000_000
