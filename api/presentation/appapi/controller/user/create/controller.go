@@ -3,8 +3,8 @@ package create
 import (
 	"net/http"
 
+	"github.com/Poul-george/go-api/api/core/usecase/api/user/post"
 	usecase "github.com/Poul-george/go-api/api/core/usecase/api/user/post"
-	"github.com/Poul-george/go-api/api/presentation/input"
 	"github.com/labstack/echo/v4"
 )
 
@@ -15,13 +15,17 @@ type Prameter struct {
 	Comments    string `json:"comments"`
 }
 
-func Post(c echo.Context) error {
+type Controller struct {
+	UseCase usecase.UseCase
+}
+
+func (c *Controller) Post(ctx echo.Context) error {
 	var p Prameter
-	if err := c.Bind(&p); err != nil {
+	if err := ctx.Bind(&p); err != nil {
 		return err
 	}
 
-	err := usecase.Do(input.Input{
+	err := c.UseCase.Do(post.Input{
 		Name:        p.Name,
 		Password:    p.Password,
 		MailAddress: p.MailAddress,
@@ -31,5 +35,5 @@ func Post(c echo.Context) error {
 		return err
 	}
 
-	return c.JSON(http.StatusOK, "正常に登録できました。")
+	return ctx.JSON(http.StatusOK, "正常に登録できました。")
 }

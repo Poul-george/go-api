@@ -8,7 +8,7 @@ type MySQL struct {
 	// PortReader int    `mapstructure:"port_reader" validate:"required"`
 	Password string `mapstructure:"password"`
 	Database string `mapstructure:"database" validate:"required"`
-	// Encoding   string `mapstructure:"encoding" validate:"required"`
+	Encoding string `mapstructure:"encoding" validate:"required"`
 	// Debug      bool   `mapstructure:"debug"`
 	// LoggerColorful   bool `mapstructure:"logger_colorful"`
 	// ConnMaxLifetime   uint64 `mapstructure:"conn_max_lifetime"`
@@ -27,5 +27,6 @@ func GetMySQLConfig() MySQL {
 		Port:     c.Port,
 		Password: c.Password,
 		Database: c.Database,
+		Encoding: c.Encoding,
 	}
 }

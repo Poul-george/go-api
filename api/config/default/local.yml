@@ -1,10 +1,16 @@
 mysql:
   user: docker
-  host: mysql_host
+  host: 127.0.0.1
+  # host: mysql_host
   port: 3306
   password: docker
   database: postapp
+  encoding: utf8mb4
 
 server:
-  start_address: http://localhost:1324
+  start_address: localhost:1324
   idle_timeout: 30_000_000_000
+
+
+# docker:docker@tcp(127.0.0.1:3306)/postapp?charset=utf8mb4&parseTime=True&loc=Asia/Tokyo
+# docker:docker@tcp(127.0.0.1:3306)/postapp?charsetutf8mb4&parseTime=True&loc=Asia/Tokyo
