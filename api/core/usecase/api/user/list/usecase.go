@@ -1,13 +1,27 @@
 package list
 
 import (
+	"context"
 	"fmt"
 
-	"github.com/Poul-george/go-api/api/infrastructure/repository/user"
+	// "github.com/Poul-george/go-api/api/infrastructure/repository/user"
+	"github.com/Poul-george/go-api/api/core/domain/repository/user"
 )
 
-func Do() (*Output, error) {
-	users, err := user.List()
+type UseCase struct {
+	UserRepository user.Repository
+}
+
+func NewUseCase(
+	userRepository user.Repository,
+) *UseCase {
+	return &UseCase{
+		UserRepository: userRepository,
+	}
+}
+
+func (u *UseCase) Do(ctx context.Context) (*Output, error) {
+	users, err := u.UserRepository.List(ctx)
 	fmt.Printf("--------------------{[%v]}----------------------------00000\n", users)
 
 	if err != nil {

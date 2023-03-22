@@ -1,6 +1,6 @@
 version: '3'
 services:
-  go-app:
+  go-app: #docker-compose exec go-app bash
     build: .
     image: go-echo-app
     container_name: go-echo-app
