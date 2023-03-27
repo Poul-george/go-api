@@ -8,6 +8,6 @@ import (
 )
 
 type Repository interface {
-	Create(*model.User) error
+	Create(context.Context, *model.User) error
 	List(context.Context) ([]table.User, error)
 }

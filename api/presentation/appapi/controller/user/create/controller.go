@@ -1,11 +1,11 @@
 package create
 
 import (
+	echoContext "github.com/Poul-george/go-api/api/presentation/appapi/echoserver/context"
 	"net/http"
 
-	"github.com/Poul-george/go-api/api/core/usecase/api/user/post"
-	usecase "github.com/Poul-george/go-api/api/core/usecase/api/user/post"
-	"github.com/labstack/echo/v4"
+	"github.com/Poul-george/go-api/api/core/usecase/api/user/create"
+	usecase "github.com/Poul-george/go-api/api/core/usecase/api/user/create"
 )
 
 type Prameter struct {
@@ -19,13 +19,13 @@ type Controller struct {
 	UseCase usecase.UseCase
 }
 
-func (c *Controller) Post(ctx echo.Context) error {
+func (c Controller) Post(ctx echoContext.Context) error {
 	var p Prameter
 	if err := ctx.Bind(&p); err != nil {
 		return err
 	}
 
-	err := c.UseCase.Do(post.Input{
+	err := c.UseCase.Do(ctx.Request().Context(), create.Input{
 		Name:        p.Name,
 		Password:    p.Password,
 		MailAddress: p.MailAddress,

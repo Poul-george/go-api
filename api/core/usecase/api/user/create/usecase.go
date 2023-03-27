@@ -1,10 +1,10 @@
-package post
+package create
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/Poul-george/go-api/api/core/domain/model"
-	// "github.com/Poul-george/go-api/api/infrastructure/repository/user"
 	"github.com/Poul-george/go-api/api/core/domain/repository/user"
 )
 
@@ -12,7 +12,15 @@ type UseCase struct {
 	UserRepository user.Repository
 }
 
-func (u *UseCase) Do(ip Input) error {
+func NewUseCase(
+	userRepository user.Repository,
+) *UseCase {
+	return &UseCase{
+		UserRepository: userRepository,
+	}
+}
+
+func (u *UseCase) Do(ctx context.Context, ip Input) error {
 	res, err := InputData(ip)
 	if err != nil {
 		return err
@@ -25,7 +33,7 @@ func (u *UseCase) Do(ip Input) error {
 
 	fmt.Printf("--------------------{[%v]}----------------------------00000\n", u)
 
-	err2 := u.UserRepository.Create(user)
+	err2 := u.UserRepository.Create(ctx, user)
 	if err2 != nil {
 		return err2
 	}

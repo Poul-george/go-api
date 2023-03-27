@@ -22,6 +22,10 @@ func (h *Handler) Reader(ctx context.Context) *gorm.DB {
 	return h.handler.Clauses(dbresolver.Read).WithContext(ctx)
 }
 
+func (h *Handler) Writer(ctx context.Context) *gorm.DB {
+	return h.handler.WithContext(ctx)
+}
+
 func NewHandler(c config.MySQL) *Handler {
 	once.Do(func() {
 		fmt.Printf("=========== %v ==============", GetDSN(c))

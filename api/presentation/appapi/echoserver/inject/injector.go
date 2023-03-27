@@ -26,7 +26,7 @@ type callFunc func(ctx echoContext.Context) error
 
 func newHandlerFunc(h callFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		//return h(c.(echoContext.Context))
+		// return h(c.(*echoContext.Context))
 		// 上のやり方だとなぜかうまくいかないので、後で原因をしっかり調べる
 		ctx := echoContext.Context{Context: c}
 		return h(ctx)

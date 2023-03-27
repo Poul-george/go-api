@@ -1,4 +1,4 @@
-package post
+package create
 
 import (
 	"github.com/Poul-george/go-api/api/core/domain/model"

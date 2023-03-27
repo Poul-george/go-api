@@ -1,10 +1,10 @@
 package list
 
 import (
+	echoContext "github.com/Poul-george/go-api/api/presentation/appapi/echoserver/context"
 	"net/http"
 
 	usecase "github.com/Poul-george/go-api/api/core/usecase/api/user/list"
-	"github.com/Poul-george/go-api/api/presentation/appapi/echoserver/context"
 )
 
 // type Prameter struct {
@@ -15,7 +15,7 @@ type Controller struct {
 	UseCase usecase.UseCase
 }
 
-func (c Controller) Get(ctx context.Context) error {
+func (c Controller) Get(ctx echoContext.Context) error {
 	// var p Prameter
 	// if err := c.Bind(&p); err != nil {
 	// 	return err
