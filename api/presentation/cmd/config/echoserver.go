@@ -22,6 +22,7 @@ func SetMiddlleware() *echo.Echo {
 	var allowedOrigins = []string{
 		"http://localhost:1324",
 		"http://localhost:3000",
+		"http://127.0.0.1:5555",
 	}
 
 	// CORS用のmiddlewareはあるものの、403を勝手に返してくれるわけではない。
@@ -53,7 +54,7 @@ func SetMiddlleware() *echo.Echo {
 		return func(c echo.Context) error {
 			// Originヘッダの中身を取得
 			origin := c.Request().Header.Get(echo.HeaderOrigin)
-			// 許可しているOriginの中で、リクエストヘッダのOriginと一致するものがあれば処理を継続
+			// // 許可しているOriginの中で、リクエストヘッダのOriginと一致するものがあれば処理を継続
 			for _, o := range allowedOrigins {
 				if origin == o {
 					return next(c)
