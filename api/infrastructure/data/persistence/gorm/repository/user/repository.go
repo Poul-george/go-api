@@ -2,6 +2,8 @@ package user
 
 import (
 	"context"
+	"errors"
+	"github.com/Poul-george/go-api/api/core/common/types/identifier"
 
 	"github.com/Poul-george/go-api/api/core/domain/model"
 	"github.com/Poul-george/go-api/api/infrastructure/data/persistence/gorm/handler"
@@ -34,4 +36,24 @@ func (r *Repository) List(ctx context.Context) ([]table.User, error) {
 		return nil, nil
 	}
 	return users, nil
+}
+
+func (r *Repository) FindByID(
+	ctx context.Context,
+	externalUserID identifier.ExternalUserID,
+	userID identifier.UserID,
+) (*table.User, error) {
+	user := table.User{}
+	q := r.handler.Reader(ctx).Model(&table.User{})
+	if externalUserID != "" {
+		q = q.Where("external_user_id = ?", externalUserID)
+	}
+	if userID != 0 {
+		q = q.Where("id = ?", userID)
+	}
+	err := q.First(&user).Error
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return &user, nil
 }

@@ -7,10 +7,11 @@ import (
 
 func ToUserForCreate(u model.User) *table.User {
 	t := table.User{
-		Name:        u.Name,
-		Password:    u.Password,
-		MailAddress: u.MailAddress,
-		Comments:    u.Comments,
+		ExternalUserID: u.ExternalUserID,
+		Name:           u.Name,
+		Password:       u.Password,
+		MailAddress:    u.MailAddress,
+		Comments:       u.Comments,
 	}
 	return &t
 }

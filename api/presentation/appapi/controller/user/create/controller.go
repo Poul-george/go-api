@@ -1,18 +1,21 @@
 package create
 
 import (
-	echoContext "github.com/Poul-george/go-api/api/presentation/appapi/echoserver/context"
+	"fmt"
 	"net/http"
+
+	echoContext "github.com/Poul-george/go-api/api/presentation/appapi/echoserver/context"
 
 	"github.com/Poul-george/go-api/api/core/usecase/api/user/create"
 	usecase "github.com/Poul-george/go-api/api/core/usecase/api/user/create"
 )
 
 type Prameter struct {
-	Name        string `json:"name"`
-	Password    string `json:"password"`
-	MailAddress string `json:"email"`
-	Comments    string `json:"comments"`
+	ExternalUserID string `json:"external_user_id"`
+	Name           string `json:"name"`
+	Password       string `json:"password"`
+	MailAddress    string `json:"email"`
+	Comments       string `json:"comments"`
 }
 
 type Controller struct {
@@ -25,11 +28,14 @@ func (c Controller) Post(ctx echoContext.Context) error {
 		return err
 	}
 
+	fmt.Printf("============================ %v =============================", p)
+
 	err := c.UseCase.Do(ctx.Request().Context(), create.Input{
-		Name:        p.Name,
-		Password:    p.Password,
-		MailAddress: p.MailAddress,
-		Comments:    p.Comments,
+		ExternalUserID: p.ExternalUserID,
+		Name:           p.Name,
+		Password:       p.Password,
+		MailAddress:    p.MailAddress,
+		Comments:       p.Comments,
 	})
 	if err != nil {
 		return err

@@ -26,7 +26,7 @@ func (u *UseCase) Do(ctx context.Context, ip Input) error {
 		return err
 	}
 
-	user, err1 := model.NewUser(res.Name, res.Password, res.MailAddress, res.Comments)
+	user, err1 := model.NewUser(res.ExternalUserID, res.Name, res.Password, res.MailAddress, res.Comments)
 	if err1 != nil {
 		return err1
 	}

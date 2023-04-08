@@ -11,11 +11,12 @@ type Output struct {
 }
 
 type OutputUser struct {
-	Id          int
-	Name        string
-	MailAddress string
-	Comments    string
-	UpdatedAt   time.Time
+	ID             int
+	ExternalUserID string
+	Name           string
+	MailAddress    string
+	Comments       string
+	UpdatedAt      time.Time
 }
 
 func NewOutput(users []table.User) *Output {
@@ -23,11 +24,12 @@ func NewOutput(users []table.User) *Output {
 
 	for i, u := range users {
 		outputUsers[i] = OutputUser{
-			Id:          u.Id,
-			Name:        u.Name,
-			MailAddress: u.MailAddress,
-			Comments:    u.Comments,
-			UpdatedAt:   u.UpdatedAt,
+			ID:             u.ID,
+			ExternalUserID: u.ExternalUserID,
+			Name:           u.Name,
+			MailAddress:    u.MailAddress,
+			Comments:       u.Comments,
+			UpdatedAt:      u.UpdatedAt,
 		}
 	}
 

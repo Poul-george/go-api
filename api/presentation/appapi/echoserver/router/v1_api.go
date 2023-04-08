@@ -20,5 +20,6 @@ func routerV1Api(g *echo.Group, injector inject.Injector) {
 		middleware.CORS(),
 	)
 	g.GET("/users", injector.V1UserListController())
+	g.GET("/users/detail", injector.V1UserDetailController())
 	g.POST("/users", injector.V1UserCreateController())
 }
