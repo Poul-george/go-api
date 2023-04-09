@@ -3,8 +3,9 @@ package detail
 import (
 	"errors"
 	"fmt"
-	"github.com/Poul-george/go-api/api/core/common/types/identifier"
 	"net/http"
+
+	"github.com/Poul-george/go-api/api/core/common/types/identifier"
 
 	echoContext "github.com/Poul-george/go-api/api/presentation/appapi/echoserver/context"
 
@@ -26,7 +27,6 @@ func (c Controller) Get(ctx echoContext.Context) error {
 		fmt.Println("バインドエラー")
 		return err
 	}
-	fmt.Println(p.UserID, p.ExternalUserID, "hfasoihfapiofhahf;ouhg;hg;eohu===========hfasoihfapiofhahf;ouhg;hg;eohu===========hfasoihfapiofhahf;ouhg;hg;eohu===========hfasoihfapiofhahf;ouhg;hg;eohu===========hfasoihfapiofhahf;ouhg;hg;eohu===========hfasoihfapiofhahf;ouhg;hg;eohu===========hfasoihfapiofhahf;ouhg;hg;eohu===========hfasoihfapiofhahf;ouhg;hg;eohu===========hfasoihfapiofhahf;ouhg;hg;eohu===========")
 
 	if p.ExternalUserID == "" && p.UserID == 0 {
 		return errors.New("user detail bad request")

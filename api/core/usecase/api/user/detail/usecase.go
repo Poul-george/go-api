@@ -21,7 +21,7 @@ func NewUseCase(
 
 func (u *UseCase) Do(ctx context.Context, input Input) (*Output, error) {
 	user, err := u.UserRepository.FindByID(ctx, input.ExternalUserID, input.UserID)
-	fmt.Printf("--------------------{[%v]}----------------------------00000\n", user)
+	fmt.Printf("--------------------{[%v]}----------------------------\n", user)
 
 	if err != nil {
 		return nil, err
