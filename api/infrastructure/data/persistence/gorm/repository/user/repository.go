@@ -26,7 +26,7 @@ func (r *Repository) Create(ctx context.Context, user *model.User) error {
 	return nil
 }
 
-func (r *Repository) List(ctx context.Context) ([]table.User, error) {
+func (r *Repository) FindByIDs(ctx context.Context) ([]table.User, error) {
 	users := []table.User{}
 	err := r.handler.Reader(ctx).
 		Model(&table.User{}).
