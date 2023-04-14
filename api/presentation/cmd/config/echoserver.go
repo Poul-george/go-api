@@ -3,6 +3,7 @@ package config
 //echoのcros設定のファイル airでの実装を考慮
 
 import (
+	"github.com/Poul-george/go-api/api/config"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -18,18 +19,13 @@ func NewEchoServer() *echo.Echo {
 
 func SetMiddlleware() *echo.Echo {
 	e := echo.New()
-
-	var allowedOrigins = []string{
-		"http://localhost:1324",
-		"http://localhost:3000",
-		"http://127.0.0.1:5555",
-	}
+	cnf := config.GetServerConfig()
 
 	// CORS用のmiddlewareはあるものの、403を勝手に返してくれるわけではない。
 	e.Use(
 		middleware.CORSWithConfig(middleware.CORSConfig{
 			AllowCredentials: true,
-			AllowOrigins:     allowedOrigins,
+			AllowOrigins:     cnf.EchoAllowOrigin,
 			AllowHeaders: []string{
 				echo.HeaderAccessControlAllowHeaders,
 				echo.HeaderContentType,
@@ -55,13 +51,12 @@ func SetMiddlleware() *echo.Echo {
 			// Originヘッダの中身を取得
 			origin := c.Request().Header.Get(echo.HeaderOrigin)
 			// // 許可しているOriginの中で、リクエストヘッダのOriginと一致するものがあれば処理を継続
-			for _, o := range allowedOrigins {
+			for _, o := range cnf.EchoAllowOrigin {
 				if origin == o {
 					return next(c)
 				}
 			}
 			// 一致しているものがなかった場合は403(Forbidden)を返却する
-			// ginと処理を合わせるなら return c.NoContent(http.StatusForbidden) のがいいかも。
 			return c.String(http.StatusForbidden, "forbidden")
 		}
 	})

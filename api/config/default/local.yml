@@ -10,7 +10,8 @@ mysql:
 server:
   start_address: localhost:1324
   idle_timeout: 30_000_000_000
-
-
-# docker:docker@tcp(127.0.0.1:3306)/postapp?charset=utf8mb4&parseTime=True&loc=Asia/Tokyo
-# docker:docker@tcp(127.0.0.1:3306)/postapp?charsetutf8mb4&parseTime=True&loc=Asia/Tokyo
+  echo_allow_origin:
+    - http://localhost:1324
+    - http://localhost:3000
+    - http://127.0.0.1:5555
+    - https://test-postman-url.com
