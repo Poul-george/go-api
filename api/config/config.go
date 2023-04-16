@@ -3,10 +3,12 @@ package config
 import (
 	"bytes"
 	_ "embed"
+	"flag"
 	"fmt"
 	"os"
 	"strings"
 	"sync"
+	"testing"
 
 	"github.com/spf13/viper"
 )
@@ -22,6 +24,9 @@ var cfg config
 //go:embed default/local.yml
 var defaultLocal []byte
 
+//go:embed default/test.yml
+var defaultTest []byte
+
 func getConfig() config {
 	once.Do(func() {
 		viper.SetConfigType("yml")
@@ -29,6 +34,9 @@ func getConfig() config {
 		viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 
 		def := defaultLocal
+		if isTesting() {
+			def = defaultTest
+		}
 
 		// 設定ファイルを読み込みます
 		err := viper.ReadConfig(bytes.NewBuffer(def))
@@ -46,6 +54,26 @@ func getConfig() config {
 
 }
 
-func GetConfig() config {
-	return getConfig()
+func isTesting() bool {
+	return flag.Lookup("test.v") != nil || strings.HasSuffix(os.Args[0], ".test")
+}
+
+// OverrideValueForTest test時のmutex処理のための上書き設定
+type OverrideValueForTest struct {
+	MySQLDatabase string
+}
+
+func (v OverrideValueForTest) bind(c *config) {
+	if v.MySQLDatabase != "" {
+		c.MySQL.Database = v.MySQLDatabase
+	}
+}
+
+var overrideValue OverrideValueForTest
+
+func SetOverrideValueForTest(t *testing.T, v OverrideValueForTest) {
+	overrideValue = v
+	t.Cleanup(func() {
+		overrideValue = OverrideValueForTest{}
+	})
 }

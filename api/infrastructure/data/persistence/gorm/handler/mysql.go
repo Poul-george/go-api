@@ -3,12 +3,11 @@ package handler
 import (
 	"context"
 	"fmt"
-	"sync"
-
 	"github.com/Poul-george/go-api/api/config"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/plugin/dbresolver"
+	"sync"
 )
 
 type Handler struct {
@@ -28,7 +27,6 @@ func (h *Handler) Writer(ctx context.Context) *gorm.DB {
 
 func NewHandler(c config.MySQL) *Handler {
 	once.Do(func() {
-		fmt.Printf("=========== %v ==============", GetDSN(c))
 		res, err := gorm.Open(mysql.Open(GetDSN(c)), &gorm.Config{})
 		if err != nil {
 			// panic(err.Error())
@@ -36,7 +34,6 @@ func NewHandler(c config.MySQL) *Handler {
 		}
 		handler = &Handler{handler: res}
 	})
-	fmt.Println("成功してるよ")
 	return handler
 }
 
@@ -51,4 +48,15 @@ func GetDSN(c config.MySQL) string {
 		c.Database,
 		// c.Encoding,
 	)
+}
+
+func (h *Handler) Close() {
+	db, err := handler.handler.DB()
+	if err != nil {
+		panic(err)
+	}
+	if err := db.Close(); err != nil {
+		panic(err)
+	}
+	once = sync.Once{}
 }

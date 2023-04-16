@@ -3,6 +3,8 @@ module github.com/Poul-george/go-api
 go 1.19
 
 require (
+	github.com/go-testfixtures/testfixtures/v3 v3.8.1
+	github.com/google/go-cmp v0.5.9
 	github.com/labstack/echo/v4 v4.9.1
 	github.com/spf13/viper v1.15.0
 	github.com/swaggo/echo-swagger v1.4.0
