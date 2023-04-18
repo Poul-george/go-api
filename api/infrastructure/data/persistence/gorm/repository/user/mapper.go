@@ -7,7 +7,7 @@ import (
 
 func ToUserForCreate(u model.User) *table.User {
 	t := table.User{
-		ExternalUserID: u.ExternalUserID,
+		ExternalUserID: u.ExternalUserID.String(),
 		Name:           u.Name,
 		Password:       u.Password,
 		MailAddress:    u.MailAddress,
