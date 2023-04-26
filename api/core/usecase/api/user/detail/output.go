@@ -1,13 +1,12 @@
 package detail
 
 import (
+	"github.com/Poul-george/go-api/api/core/domain/model"
 	"time"
-
-	"github.com/Poul-george/go-api/api/infrastructure/data/persistence/gorm/table"
 )
 
 type Output struct {
-	ID             int
+	ID             uint64
 	ExternalUserID string
 	Name           string
 	MailAddress    string
@@ -15,13 +14,13 @@ type Output struct {
 	UpdatedAt      time.Time
 }
 
-func NewOutput(user table.User) *Output {
+func NewOutput(user model.User) *Output {
 	return &Output{
-		ID:             user.ID,
-		ExternalUserID: user.ExternalUserID,
-		Name:           user.Name,
-		MailAddress:    user.MailAddress,
-		Comments:       user.Comments,
-		UpdatedAt:      user.UpdatedAt,
+		ID:             user.ID().Uint64(),
+		ExternalUserID: user.ExternalUserID().String(),
+		Name:           user.Name(),
+		MailAddress:    user.MailAddress(),
+		Comments:       user.Comments(),
+		UpdatedAt:      user.UpdatedAt(),
 	}
 }

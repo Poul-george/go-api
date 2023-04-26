@@ -4,14 +4,15 @@ import (
 	"context"
 	"github.com/Poul-george/go-api/api/config"
 	"github.com/Poul-george/go-api/api/core/common/types/identifier"
+	"github.com/Poul-george/go-api/api/core/domain/model"
 	"github.com/Poul-george/go-api/api/infrastructure/data/persistence/gorm/handler"
 	userRepositoryImpl "github.com/Poul-george/go-api/api/infrastructure/data/persistence/gorm/repository/user"
-	"github.com/Poul-george/go-api/api/infrastructure/data/persistence/gorm/table"
 	"github.com/Poul-george/go-api/api/util/testhelper"
 	"github.com/go-testfixtures/testfixtures/v3"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"testing"
+	"time"
 )
 
 func TestRepository_FindByID(t *testing.T) {
@@ -29,7 +30,7 @@ func TestRepository_FindByID(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    UserInfo
-		want    *table.User
+		want    *model.User
 		wantErr bool
 	}{
 		{
@@ -38,14 +39,15 @@ func TestRepository_FindByID(t *testing.T) {
 				externalUserID: identifier.ExternalUserID("111"),
 				userID:         identifier.UserID(0),
 			},
-			want: &table.User{
-				ID:             1,
-				ExternalUserID: "111",
-				Name:           "test1",
-				Password:       "$2a$10$tZN5qGGheum3BL9up8VhbOXpojUnlyb5vQEehb.rkPqV8VeP57aHu",
-				MailAddress:    "test@gmail.com",
-				Comments:       "test comments",
-			},
+			want: model.ReConstructorUser(
+				1,
+				"111",
+				"test1",
+				"$2a$10$tZN5qGGheum3BL9up8VhbOXpojUnlyb5vQEehb.rkPqV8VeP57aHu",
+				"test@gmail.com",
+				"test comments",
+				time.Date(2023, 1, 1, 00, 00, 00, 00, time.Local),
+			),
 			wantErr: false,
 		},
 		{
@@ -54,14 +56,15 @@ func TestRepository_FindByID(t *testing.T) {
 				externalUserID: identifier.ExternalUserID(""),
 				userID:         identifier.UserID(2),
 			},
-			want: &table.User{
-				ID:             2,
-				ExternalUserID: "222",
-				Name:           "test2",
-				Password:       "$2a$10$tZN5qGGheum3BL9up8VhbOXpojUnlyb5vQEehb.rkPqV8VeP57aHu",
-				MailAddress:    "test@gmail.com",
-				Comments:       "test comments",
-			},
+			want: model.ReConstructorUser(
+				2,
+				"222",
+				"test2",
+				"$2a$10$tZN5qGGheum3BL9up8VhbOXpojUnlyb5vQEehb.rkPqV8VeP57aHu",
+				"test@gmail.com",
+				"test comments",
+				time.Date(2023, 1, 1, 00, 00, 00, 00, time.Local),
+			),
 			wantErr: false,
 		},
 		{
@@ -70,14 +73,15 @@ func TestRepository_FindByID(t *testing.T) {
 				externalUserID: identifier.ExternalUserID("333"),
 				userID:         identifier.UserID(3),
 			},
-			want: &table.User{
-				ID:             3,
-				ExternalUserID: "333",
-				Name:           "test3",
-				Password:       "$2a$10$tZN5qGGheum3BL9up8VhbOXpojUnlyb5vQEehb.rkPqV8VeP57aHu",
-				MailAddress:    "test@gmail.com",
-				Comments:       "test comments",
-			},
+			want: model.ReConstructorUser(
+				3,
+				"333",
+				"test3",
+				"$2a$10$tZN5qGGheum3BL9up8VhbOXpojUnlyb5vQEehb.rkPqV8VeP57aHu",
+				"test@gmail.com",
+				"test comments",
+				time.Date(2023, 1, 1, 00, 00, 00, 00, time.Local),
+			),
 			wantErr: false,
 		},
 		{
@@ -106,7 +110,9 @@ func TestRepository_FindByID(t *testing.T) {
 				t.Errorf("TestUserRepository.FindByID() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if diff := cmp.Diff(got, tt.want, cmpopts.IgnoreFields(table.User{}, "CreatedAt", "UpdatedAt")); diff != "" {
+
+			opt := cmp.AllowUnexported(model.User{})
+			if diff := cmp.Diff(got, tt.want, cmpopts.IgnoreFields(model.User{}, "updatedAt"), opt); diff != "" {
 				t.Errorf("TestUserRepository.FindByID() diff(-got +want)\n%s", diff)
 			}
 		})

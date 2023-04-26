@@ -3,15 +3,18 @@ package model
 import (
 	"github.com/Poul-george/go-api/api/core/common/types/identifier"
 	"golang.org/x/crypto/bcrypt"
+	"time"
 )
 
 type User struct {
-	ExternalUserID identifier.ExternalUserID
-	Name           string
-	Password       string
-	MailAddress    string
-	Comments       string
-	UserDetail     UserDetail
+	id             identifier.UserID
+	externalUserID identifier.ExternalUserID
+	name           string
+	password       string
+	mailAddress    string
+	comments       string
+	updatedAt      time.Time
+	userDetail     UserDetail
 }
 
 type UserDetail struct {
@@ -44,12 +47,42 @@ func NewUser(
 	pass, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 
 	user := User{
-		ExternalUserID: identifier.ExternalUserID(externalUserID),
-		Name:           name,
-		Password:       string(pass),
-		MailAddress:    mailAddress,
-		Comments:       comments,
+		externalUserID: identifier.ExternalUserID(externalUserID),
+		name:           name,
+		password:       string(pass),
+		mailAddress:    mailAddress,
+		comments:       comments,
 	}
 
 	return &user, nil
 }
+
+func ReConstructorUser(
+	id identifier.UserID,
+	externalUserID identifier.ExternalUserID,
+	name string,
+	password string,
+	mailAddress string,
+	comments string,
+	updateAt time.Time,
+	// userDetail UserDetail,
+) *User {
+	return &User{
+		id:             id,
+		externalUserID: externalUserID,
+		name:           name,
+		password:       password,
+		mailAddress:    mailAddress,
+		comments:       comments,
+		updatedAt:      updateAt,
+	}
+}
+
+func (u *User) ID() identifier.UserID                     { return u.id }
+func (u *User) ExternalUserID() identifier.ExternalUserID { return u.externalUserID }
+func (u *User) Name() string                              { return u.name }
+func (u *User) Password() string                          { return u.password }
+func (u *User) MailAddress() string                       { return u.mailAddress }
+func (u *User) Comments() string                          { return u.comments }
+func (u *User) UpdatedAt() time.Time                      { return u.updatedAt }
+func (u *User) UserDetail() UserDetail                    { return u.userDetail }

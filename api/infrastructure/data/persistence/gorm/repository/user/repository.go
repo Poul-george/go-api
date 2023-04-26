@@ -42,7 +42,7 @@ func (r *Repository) FindByID(
 	ctx context.Context,
 	externalUserID identifier.ExternalUserID,
 	userID identifier.UserID,
-) (*table.User, error) {
+) (*model.User, error) {
 	user := table.User{}
 	q := r.handler.Reader(ctx).Model(&table.User{})
 	if externalUserID != "" {
@@ -55,5 +55,7 @@ func (r *Repository) FindByID(
 	if err != nil {
 		return nil, errors.New(err.Error())
 	}
-	return &user, nil
+
+	res := ToModelUser(user)
+	return res, nil
 }
