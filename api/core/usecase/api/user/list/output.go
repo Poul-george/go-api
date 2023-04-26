@@ -1,9 +1,8 @@
 package list
 
 import (
+	"github.com/Poul-george/go-api/api/core/domain/model"
 	"time"
-
-	"github.com/Poul-george/go-api/api/infrastructure/data/persistence/gorm/table"
 )
 
 type Output struct {
@@ -11,7 +10,7 @@ type Output struct {
 }
 
 type OutputUser struct {
-	ID             int
+	ID             uint64
 	ExternalUserID string
 	Name           string
 	MailAddress    string
@@ -19,17 +18,17 @@ type OutputUser struct {
 	UpdatedAt      time.Time
 }
 
-func NewOutput(users []table.User) *Output {
+func NewOutput(users []model.User) *Output {
 	outputUsers := make([]OutputUser, len(users))
 
 	for i, u := range users {
 		outputUsers[i] = OutputUser{
-			ID:             u.ID,
-			ExternalUserID: u.ExternalUserID,
-			Name:           u.Name,
-			MailAddress:    u.MailAddress,
-			Comments:       u.Comments,
-			UpdatedAt:      u.UpdatedAt,
+			ID:             u.ID().Uint64(),
+			ExternalUserID: u.ExternalUserID().String(),
+			Name:           u.Name(),
+			MailAddress:    u.MailAddress(),
+			Comments:       u.Comments(),
+			UpdatedAt:      u.UpdatedAt(),
 		}
 	}
 

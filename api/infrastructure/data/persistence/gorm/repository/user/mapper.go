@@ -28,3 +28,12 @@ func ToModelUser(t table.User) *model.User {
 		t.UpdatedAt,
 	)
 }
+
+func ToModelUsers(t []table.User) []model.User {
+	users := make([]model.User, len(t))
+	for i, v := range t {
+		u := ToModelUser(v)
+		users[i] = *u
+	}
+	return users
+}

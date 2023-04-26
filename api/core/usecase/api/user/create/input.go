@@ -1,10 +1,12 @@
 package create
 
-import (
-	"github.com/Poul-george/go-api/api/core/domain/model"
-)
-
-type Input model.User
+type Input struct {
+	ExternalUserID string
+	Name           string
+	Password       string
+	MailAddress    string
+	Comments       string
+}
 
 func InputData(ip Input) (*Input, error) {
 	// var input Input

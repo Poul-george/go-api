@@ -26,7 +26,7 @@ func (r *Repository) Create(ctx context.Context, user *model.User) error {
 	return nil
 }
 
-func (r *Repository) FindByIDs(ctx context.Context) ([]table.User, error) {
+func (r *Repository) FindByIDs(ctx context.Context) ([]model.User, error) {
 	users := []table.User{}
 	err := r.handler.Reader(ctx).
 		Model(&table.User{}).
@@ -35,7 +35,8 @@ func (r *Repository) FindByIDs(ctx context.Context) ([]table.User, error) {
 	if err != nil {
 		return nil, nil
 	}
-	return users, nil
+	res := ToModelUsers(users)
+	return res, nil
 }
 
 func (r *Repository) FindByID(
