@@ -3,6 +3,7 @@ package detail
 import (
 	"context"
 	"fmt"
+	"github.com/Poul-george/go-api/api/util/errors"
 
 	"github.com/Poul-george/go-api/api/core/domain/repository/user"
 )
@@ -24,7 +25,7 @@ func (u *UseCase) Do(ctx context.Context, input Input) (*Output, error) {
 	fmt.Printf("--------------------{[%v]}----------------------------\n", user)
 
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err)
 	}
 
 	return NewOutput(*user), nil

@@ -2,6 +2,7 @@ package create
 
 import (
 	"fmt"
+	"github.com/Poul-george/go-api/api/presentation/appapi/common/response"
 	"net/http"
 
 	echoContext "github.com/Poul-george/go-api/api/presentation/appapi/echoserver/context"
@@ -10,7 +11,7 @@ import (
 	usecase "github.com/Poul-george/go-api/api/core/usecase/api/user/create"
 )
 
-type Prameter struct {
+type Parameter struct {
 	ExternalUserID string `json:"external_user_id"`
 	Name           string `json:"name"`
 	Password       string `json:"password"`
@@ -23,9 +24,9 @@ type Controller struct {
 }
 
 func (c Controller) Post(ctx echoContext.Context) error {
-	var p Prameter
+	var p Parameter
 	if err := ctx.Bind(&p); err != nil {
-		return err
+		return response.BadRequest(ctx, err)
 	}
 
 	fmt.Printf("============================ %v =============================", p)
@@ -38,8 +39,8 @@ func (c Controller) Post(ctx echoContext.Context) error {
 		Comments:       p.Comments,
 	})
 	if err != nil {
-		return err
+		return response.InternalServerError(ctx, err)
 	}
 
-	return ctx.JSON(http.StatusOK, "正常に登録できました。")
+	return response.OKWithMessage(ctx, http.StatusOK, "正常に登録できました")
 }

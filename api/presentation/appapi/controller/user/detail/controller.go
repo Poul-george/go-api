@@ -1,8 +1,9 @@
 package detail
 
 import (
-	"errors"
 	"fmt"
+	"github.com/Poul-george/go-api/api/presentation/appapi/common/response"
+	"github.com/Poul-george/go-api/api/util/errors"
 	"net/http"
 
 	"github.com/Poul-george/go-api/api/core/common/types/identifier"
@@ -12,7 +13,7 @@ import (
 	usecase "github.com/Poul-george/go-api/api/core/usecase/api/user/detail"
 )
 
-type Prameter struct {
+type Parameter struct {
 	UserID         uint64 `json:"user_id" query:"user_id"`
 	ExternalUserID string `json:"external_user_id" query:"external_user_id"`
 }
@@ -22,14 +23,14 @@ type Controller struct {
 }
 
 func (c Controller) Get(ctx echoContext.Context) error {
-	var p Prameter
+	var p Parameter
 	if err := ctx.Bind(&p); err != nil {
 		fmt.Println("バインドエラー")
-		return err
+		return response.BadRequest(ctx, err)
 	}
 
 	if p.ExternalUserID == "" && p.UserID == 0 {
-		return errors.New("user detail bad request")
+		return response.BadRequest(ctx, errors.New("リクエストが不正です"))
 	}
 
 	out, err := c.UseCase.Do(ctx.Request().Context(), usecase.Input{
@@ -37,10 +38,10 @@ func (c Controller) Get(ctx echoContext.Context) error {
 		UserID:         identifier.UserID(p.UserID),
 	})
 	if err != nil {
-		return ctx.JSON(http.StatusBadRequest, "リクエストができませんでした。")
+		return response.BadRequest(ctx, errors.New("リクエストができませんでした"))
 	}
 
 	res := NewResponse(*out)
 
-	return ctx.JSON(http.StatusOK, res)
+	return response.OKWithItem(ctx, http.StatusOK, res)
 }

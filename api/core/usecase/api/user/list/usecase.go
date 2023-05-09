@@ -3,6 +3,7 @@ package list
 import (
 	"context"
 	"fmt"
+	"github.com/Poul-george/go-api/api/util/errors"
 
 	// "github.com/Poul-george/go-api/api/infrastructure/repository/user"
 	"github.com/Poul-george/go-api/api/core/domain/repository/user"
@@ -25,7 +26,7 @@ func (u *UseCase) Do(ctx context.Context) (*Output, error) {
 	fmt.Printf("--------------------{[%v]}----------------------------00000\n", users)
 
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err)
 	}
 
 	return NewOutput(users), nil

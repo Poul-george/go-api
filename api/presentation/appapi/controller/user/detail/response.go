@@ -7,7 +7,7 @@ import (
 )
 
 type Response struct {
-	ID             int       `json:"id"`
+	ID             uint64    `json:"id"`
 	ExternalUserID string    `json:"external_user_id"`
 	Name           string    `json:"name"`
 	Password       string    `json:"password"`

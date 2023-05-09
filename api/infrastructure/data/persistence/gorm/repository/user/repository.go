@@ -2,8 +2,8 @@ package user
 
 import (
 	"context"
-	"errors"
 	"github.com/Poul-george/go-api/api/core/common/types/identifier"
+	"github.com/Poul-george/go-api/api/util/errors"
 
 	"github.com/Poul-george/go-api/api/core/domain/model"
 	"github.com/Poul-george/go-api/api/infrastructure/data/persistence/gorm/handler"
@@ -21,7 +21,7 @@ func NewRepository(h *handler.Handler) *Repository {
 func (r *Repository) Create(ctx context.Context, user *model.User) error {
 	createUser := ToUserForCreate(*user)
 	if err := r.handler.Writer(ctx).Create(createUser).Error; err != nil {
-		return err
+		return errors.Wrap(err)
 	}
 	return nil
 }
@@ -33,7 +33,7 @@ func (r *Repository) FindByIDs(ctx context.Context) ([]model.User, error) {
 		Order("id").
 		Find(&users).Error
 	if err != nil {
-		return nil, nil
+		return nil, errors.Wrap(err)
 	}
 	res := ToModelUsers(users)
 	return res, nil
@@ -54,7 +54,7 @@ func (r *Repository) FindByID(
 	}
 	err := q.First(&user).Error
 	if err != nil {
-		return nil, errors.New(err.Error())
+		return nil, errors.Wrap(err)
 	}
 
 	res := ToModelUser(user)

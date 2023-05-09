@@ -30,6 +30,7 @@ var defaultTest []byte
 func getConfig() config {
 	once.Do(func() {
 		viper.SetConfigType("yml")
+		// これでaws上の環境変数を取得しているっぽい
 		viper.AutomaticEnv()
 		viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 
