@@ -1,9 +1,10 @@
 package model
 
 import (
+	"time"
+
 	"github.com/Poul-george/go-api/api/core/common/types/identifier"
 	"golang.org/x/crypto/bcrypt"
-	"time"
 )
 
 type User struct {
@@ -85,4 +86,5 @@ func (u *User) Password() string                          { return u.password }
 func (u *User) MailAddress() string                       { return u.mailAddress }
 func (u *User) Comments() string                          { return u.comments }
 func (u *User) UpdatedAt() time.Time                      { return u.updatedAt }
-func (u *User) UserDetail() UserDetail                    { return u.userDetail }
+
+func (u *User) UserDetail() UserDetail { return u.userDetail }

@@ -1,6 +1,8 @@
 package response
 
-import echoContext "github.com/Poul-george/go-api/api/presentation/appapi/echoserver/context"
+import (
+	echoContext "github.com/Poul-george/go-api/api/presentation/appapi/echoserver/context"
+)
 
 func OKWithItem(c echoContext.Context, code int, item interface{}) error {
 	return c.JSON(

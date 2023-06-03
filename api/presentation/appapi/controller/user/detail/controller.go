@@ -2,9 +2,10 @@ package detail
 
 import (
 	"fmt"
+	"net/http"
+
 	"github.com/Poul-george/go-api/api/presentation/appapi/common/response"
 	"github.com/Poul-george/go-api/api/util/errors"
-	"net/http"
 
 	"github.com/Poul-george/go-api/api/core/common/types/identifier"
 
@@ -29,6 +30,8 @@ func (c Controller) Get(ctx echoContext.Context) error {
 		return response.BadRequest(ctx, err)
 	}
 
+	fmt.Printf("============================ %s ============================= ", "detail get request")
+
 	if p.ExternalUserID == "" && p.UserID == 0 {
 		return response.BadRequest(ctx, errors.New("リクエストが不正です"))
 	}
@@ -38,7 +41,7 @@ func (c Controller) Get(ctx echoContext.Context) error {
 		UserID:         identifier.UserID(p.UserID),
 	})
 	if err != nil {
-		return response.BadRequest(ctx, errors.New("リクエストができませんでした"))
+		return response.BadRequest(ctx, errors.New(err.Error()))
 	}
 
 	res := NewResponse(*out)

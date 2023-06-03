@@ -29,7 +29,7 @@ func (c Controller) Post(ctx echoContext.Context) error {
 		return response.BadRequest(ctx, err)
 	}
 
-	fmt.Printf("============================ %v =============================", p)
+	fmt.Printf("============================ %v ============================= create parameter", p)
 
 	err := c.UseCase.Do(ctx.Request().Context(), create.Input{
 		ExternalUserID: p.ExternalUserID,

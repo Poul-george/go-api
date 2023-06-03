@@ -10,7 +10,6 @@ type Response struct {
 	ID             uint64    `json:"id"`
 	ExternalUserID string    `json:"external_user_id"`
 	Name           string    `json:"name"`
-	Password       string    `json:"password"`
 	MailAddress    string    `json:"mail_address"`
 	Comments       string    `json:"comments"`
 	UpdatedAt      time.Time `json:"latest_day"`

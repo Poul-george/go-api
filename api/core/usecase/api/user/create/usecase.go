@@ -32,7 +32,7 @@ func (u *UseCase) Do(ctx context.Context, ip Input) error {
 		return errors.Wrap(err)
 	}
 
-	fmt.Printf("--------------------{[%v]}----------------------------00000\n", u)
+	fmt.Printf("--------------------{[%v] user create}----------------------------00000\n", u)
 
 	err = u.UserRepository.Create(ctx, user)
 	if err != nil {
